@@ -19,10 +19,8 @@ model User {
   name      String     
   password  String
   booking   Booking[]
-  isAdmin   Boolean
+  isAdmin   Boolean    @default(false)
 }
-
-
 
 model Room {
   id          Int    @id @default(autoincrement())
