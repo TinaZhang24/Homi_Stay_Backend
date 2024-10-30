@@ -9,7 +9,7 @@ const seed = async (numUsers = 3, numBookings = 3, numReviews = 1) => {
   }));
   await prisma.user.createMany({ data: users });
 
-  //Create rooms
+  // Create rooms
   const rooms = [
     {
       roomName: "Santa Monica",
@@ -107,7 +107,7 @@ const seed = async (numUsers = 3, numBookings = 3, numReviews = 1) => {
   }));
   await prisma.booking.createMany({ data: bookings });
 
-  //Create reviews
+  // Create reviews
 
   const reviews = Array.from({ length: numReviews }, () => ({
     description: faker.lorem.sentence(4),

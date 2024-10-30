@@ -5,6 +5,9 @@ const PORT = 3000;
 const dotenv = require("dotenv");
 dotenv.config();
 
+// import routes from slice
+app.use("/rooms", require("./api/rooms"));
+
 app.use(express.json());
 // Logging middleware
 app.use((req, res, next) => {
