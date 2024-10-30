@@ -24,7 +24,8 @@ model User {
 
 model Room {
   id          Int    @id @default(autoincrement())
-  roomNumber  String
+  roomName    String
+  description String
   price       Int
   image       String
   type        String
@@ -36,13 +37,13 @@ model Booking {
   fromDate    DateTime
   toDate      DateTime
 
-  user   User @relation(fields: [userId], references: [id])
-  userId Int
+  user        User @relation(fields: [userId], references: [id])
+  userId      Int
 
-  room   Room @relation(fields: [roomId], references: [id])
-  roomId Int
+  room        Room @relation(fields: [roomId], references: [id])
+  roomId      Int
 
-  review   Review? 
+  review      Review? 
 }
 
 model Review {
