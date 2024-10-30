@@ -17,7 +17,7 @@ const seed = async (numUsers = 3, numBookings = 3, numReviews = 1) => {
       price: 200,
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgkMx8bhidyErnEeCzKvW4b5RXdOq85JyLug&s",
-      type: "Double",
+      type: "Double Room",
     },
     {
       roomName: "Huntington Beach",
@@ -25,7 +25,7 @@ const seed = async (numUsers = 3, numBookings = 3, numReviews = 1) => {
       price: 150,
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROIpMERRZPtCPEbqNEuWndobk3t2KweLqvLA&s",
-      type: "Single",
+      type: "Single Room",
     },
     {
       roomName: "Venice Beach",
@@ -33,7 +33,7 @@ const seed = async (numUsers = 3, numBookings = 3, numReviews = 1) => {
       price: 150,
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOdV0QLDUm-0uCa9TM-3s82v6JSUnU95Yizg&s",
-      type: "Single",
+      type: "Single Room",
     },
     {
       roomName: "Laguna Beach",
@@ -41,7 +41,7 @@ const seed = async (numUsers = 3, numBookings = 3, numReviews = 1) => {
       price: 200,
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN4xUZ9GaqUJ0baKuS8xKEnZPek7NurJ8lwA&s",
-      type: "Double",
+      type: "Double Room",
     },
     {
       roomName: "Big Sur",
@@ -49,7 +49,7 @@ const seed = async (numUsers = 3, numBookings = 3, numReviews = 1) => {
       price: 150,
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjH6KUF6E_bpbRe62DYZCKxglMkQV3fFJjDw&s",
-      type: "Single",
+      type: "Single Room",
     },
     {
       roomName: "Golden Gate Bridge",
@@ -57,7 +57,7 @@ const seed = async (numUsers = 3, numBookings = 3, numReviews = 1) => {
       price: 200,
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAHzjSjquFO7kWabJ53Oj9zL6IewcfEgVlRQ&s",
-      type: "Double",
+      type: "Double Room",
     },
     {
       roomName: "Joshua Tree",
@@ -65,7 +65,7 @@ const seed = async (numUsers = 3, numBookings = 3, numReviews = 1) => {
       price: 150,
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNRif49_jxEd8YwvX2oWReqkXmtGBMnYlVcg&s",
-      type: "Single",
+      type: "Single Room",
     },
     {
       roomName: "Yosemite",
@@ -73,7 +73,7 @@ const seed = async (numUsers = 3, numBookings = 3, numReviews = 1) => {
       price: 200,
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe7xFSiVo5eoZGaZLqt4ZqP-glOMcYvyQhIw&s",
-      type: "Double",
+      type: "Double Room",
     },
     {
       roomName: "Disneyland",
@@ -81,7 +81,7 @@ const seed = async (numUsers = 3, numBookings = 3, numReviews = 1) => {
       price: 150,
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ-07YrE8PiMnO7OjIdB6uP2KbN3uPS0SWng&s",
-      type: "Single",
+      type: "Single Room",
     },
     {
       roomName: "Universal Studio",
