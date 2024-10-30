@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 const PORT = 3000;
 
+const cors = require("cors");
+app.use(cors({ origin: /localhost/ }));
+
 const dotenv = require("dotenv");
 dotenv.config();
 
