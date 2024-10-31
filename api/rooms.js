@@ -30,6 +30,7 @@ router.get("/available", async (req, res, next) => {
           none: {
             OR: [
               {
+                //should match the field name in module
                 fromDate: {
                   lte: end,
                 },
