@@ -8,7 +8,12 @@ app.use(cors({ origin: /localhost/ }));
 const dotenv = require("dotenv");
 dotenv.config();
 
-// import routes from slice
+app.use(require("morgan")("dev"));
+app.use(express.json());
+
+//Routes for auth, booking, rooms
+app.use(require("./api/auth").router);
+app.use("/bookings", require("./api/bookings"));
 app.use("/rooms", require("./api/rooms"));
 
 app.use(express.json());

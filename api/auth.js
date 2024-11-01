@@ -18,7 +18,7 @@ router.use(async (req, res, next) => {
   // If there is no token move on to the next middleware
   if (!token) return next();
 
-  // TODO: Find user with ID decrypted from the token and attach to the request
+  // Find user with ID decrypted from the token and attach to the request
   try {
     // Decodes the id from the token, using the secret code in env
     // Assigns the id to variable id
@@ -36,9 +36,9 @@ router.use(async (req, res, next) => {
 });
 
 router.post("/register", async (req, res, next) => {
-  const { username, password } = req.body;
+  const { name, email, password } = req.body;
   try {
-    const user = await prisma.user.register(username, password);
+    const user = await prisma.user.register(name, email, password);
     const token = createToken(user.id);
     res.status(201).json({ token });
   } catch (error) {
@@ -47,9 +47,10 @@ router.post("/register", async (req, res, next) => {
 });
 
 router.post("/login", async (req, res, next) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
-    const user = await prisma.user.login(username, password);
+    const user = await prisma.user.login(email, password);
+
     const token = createToken(user.id);
     res.json({ token });
   } catch (error) {
