@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 module.exports = router;
-
+const { authenticate } = require("./auth");
 const prisma = require("../prisma");
 
 // GET/rooms should send an array of all rooms.

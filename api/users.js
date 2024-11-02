@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 module.exports = router;
+const { authenticate } = require("./auth");
+const prisma = require("../prisma");
 
 // GET/users should send an array of all users.
 router.get("/", async (req, res, next) => {
@@ -12,7 +14,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// GET/users/:id should send a single room according to given ID
+// GET/users/:id should send a single user according to given ID
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
@@ -67,7 +69,7 @@ router.put("/:id", async (req, res, next) => {
       where: { id: +id },
       data: { name, email, password },
     });
-    res.json(updatedRoom);
+    res.json(updatedUser);
   } catch (e) {
     next(e);
   }
