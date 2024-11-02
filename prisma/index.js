@@ -14,7 +14,6 @@ const prisma = new PrismaClient().$extends({
         const user = await prisma.user.findUniqueOrThrow({
           where: { email },
         });
-        // debugging here
         const valid = await bcrypt.compare(password, user.password);
         if (!valid) throw Error("Invalid password");
         return user;

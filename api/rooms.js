@@ -61,3 +61,65 @@ router.get("/:id", async (req, res, next) => {
     next(e);
   }
 });
+
+// POST/rooms should add a new room
+router.post("/", authenticate, async (req, res, next) => {
+  const { roomName, description, price, image, type } = req.body;
+
+  try {
+    const room = await prisma.room.create({
+      data: { roomName, description, price, image, type },
+    });
+    res.status(201).json(room);
+  } catch (e) {
+    next(e);
+  }
+});
+
+// DELETE/rooms should delete an existing room giver an ID
+router.delete("/:id", async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    // Check if the room exists
+    const room = await prisma.room.findUnique({ where: { id: +id } });
+    if (!room) {
+      return next({
+        status: 404,
+        message: `Room with id ${id} does not exist.`,
+      });
+    }
+
+    // Delete the room
+    await prisma.room.delete({ where: { id: +id } });
+    res.sendStatus(204);
+  } catch (e) {
+    next(e);
+  }
+});
+
+// PUT/rooms should update the information of a specific room by ID
+router.put("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  const { roomName, description, price, image, type } = req.body;
+
+  try {
+    // Check if the room exists
+    const room = await prisma.room.findUnique({ where: { id: +id } });
+    if (!room) {
+      return next({
+        status: 404,
+        message: `Room with id ${id} does not exist.`,
+      });
+    }
+
+    // Update the room
+    const updatedRoom = await prisma.room.update({
+      where: { id: +id },
+      data: { roomName, description, price, image, type },
+    });
+    res.json(updatedRoom);
+  } catch (e) {
+    next(e);
+  }
+});
