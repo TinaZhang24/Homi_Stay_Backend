@@ -86,7 +86,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 ### Change the information of an existing booking
-PUT {{host}}/bookings/2
+PUT {{host}}/bookings/7
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
