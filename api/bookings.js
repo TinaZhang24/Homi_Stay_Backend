@@ -15,7 +15,7 @@ router.get("/", authenticate, async (req, res, next) => {
 });
 
 // GET/bookings/:id should send a single booking according to given ID
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", authenticate, async (req, res, next) => {
   const { id } = req.params;
   try {
     const booking = await prisma.booking.findUniqueOrThrow({
@@ -38,6 +38,7 @@ router.post("/", authenticate, async (req, res, next) => {
       data: {
         fromDate,
         toDate,
+        userId: req.user.id,
         roomId: +roomId,
       },
     });
