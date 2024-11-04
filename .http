@@ -1,5 +1,5 @@
 @host = http://localhost:3000
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImlhdCI6MTczMDcyMjIwOSwiZXhwIjoxNzMwODA4NjA5fQ.CaNtoHIT20Td0or1XpggJiw79lB0Z--juCrW15AKXDU
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzMwNzYxMTE5LCJleHAiOjE3MzA4NDc1MTl9.yL7ltXH7hYlksdjBD4cHEvN5OyhJR2ncqBGmCByCELI
 
 ### Register new user
 POST {{host}}/register
@@ -75,8 +75,8 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "fromDate": 2024-11-09, 
-  "toDate": 2024-11-10, 
+  "fromDate": "2024-11-09", 
+  "toDate": "2024-11-10", 
   "roomId": 6
 }
 
@@ -91,8 +91,8 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
- "fromDate": 2024-11-09, 
-  "toDate": 2024-11-10, 
+ "fromDate": "2024-11-09", 
+  "toDate": "2024-11-10", 
   "roomId": 7
 }
 

@@ -7,7 +7,9 @@ const prisma = require("../prisma");
 // GET/bookings should send an array of all bookings.
 router.get("/", authenticate, async (req, res, next) => {
   try {
-    const bookings = await prisma.booking.findMany();
+    const bookings = await prisma.booking.findMany({
+      where: { userId: req.user.id },
+    });
     res.json(bookings);
   } catch (e) {
     next(e);
@@ -30,14 +32,16 @@ router.get("/:id", authenticate, async (req, res, next) => {
 // POST/bookings should add a booking
 router.post("/", authenticate, async (req, res, next) => {
   const { fromDate, toDate, roomId } = req.body;
+  const from = new Date(fromDate).toISOString();
+  const to = new Date(toDate).toISOString();
   try {
     // how to convert only one room Id to object format? Do we actually need the conversion?
     // Here, room is not an array, one booking -> one room, not sure if Mapping works
     // const room = roomId.map((id) => ({ id }));
     const booking = await prisma.booking.create({
       data: {
-        fromDate,
-        toDate,
+        fromDate: from,
+        toDate: to,
         userId: req.user.id,
         roomId: +roomId,
       },
@@ -66,7 +70,9 @@ router.delete("/:id", authenticate, async (req, res, next) => {
 // PUT/bookings should update the information of a specific booking by ID
 router.put("/:id", async (req, res, next) => {
   const { id } = req.params;
-  const { fromDate, toDate, userId, roomId } = req.body;
+  const { fromDate, toDate, roomId } = req.body;
+  const from = new Date(fromDate).toISOString();
+  const to = new Date(toDate).toISOString();
 
   try {
     // Check if the booking exists
@@ -81,7 +87,12 @@ router.put("/:id", async (req, res, next) => {
     // Update the booking
     const updatedBooking = await prisma.booking.update({
       where: { id: +id },
-      data: { fromDate, toDate, userId, roomId },
+      data: {
+        fromDate: from,
+        toDate: to,
+        userId: req.user.id,
+        roomId: +roomId,
+      },
     });
     res.json(updatedBooking);
   } catch (e) {
