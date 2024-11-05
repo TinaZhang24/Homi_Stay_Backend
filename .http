@@ -64,11 +64,6 @@ GET {{host}}/bookings
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-### Get specific bookings
-GET {{host}}/bookings/3
-Authorization: Bearer {{token}}
-Content-Type: application/json
-
 ### Add a new booking
 POST {{host}}/bookings
 Authorization: Bearer {{token}}

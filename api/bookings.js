@@ -19,19 +19,6 @@ router.get("/", authenticate, async (req, res, next) => {
   }
 });
 
-// GET/bookings/:id should send a single booking according to given ID
-router.get("/:id", authenticate, async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    const booking = await prisma.booking.findUniqueOrThrow({
-      where: { id: +id },
-    });
-    res.json(booking);
-  } catch (e) {
-    next(e);
-  }
-});
-
 // POST/bookings should add a booking
 router.post("/", authenticate, async (req, res, next) => {
   const { fromDate, toDate, roomId } = req.body;
