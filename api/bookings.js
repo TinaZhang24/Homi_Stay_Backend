@@ -9,6 +9,9 @@ router.get("/", authenticate, async (req, res, next) => {
   try {
     const bookings = await prisma.booking.findMany({
       where: { userId: req.user.id },
+      include: {
+        room: true,
+      },
     });
     res.json(bookings);
   } catch (e) {
@@ -35,9 +38,6 @@ router.post("/", authenticate, async (req, res, next) => {
   const from = new Date(fromDate).toISOString();
   const to = new Date(toDate).toISOString();
   try {
-    // how to convert only one room Id to object format? Do we actually need the conversion?
-    // Here, room is not an array, one booking -> one room, not sure if Mapping works
-    // const room = roomId.map((id) => ({ id }));
     const booking = await prisma.booking.create({
       data: {
         fromDate: from,
