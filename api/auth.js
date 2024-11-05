@@ -67,4 +67,13 @@ function authenticate(req, res, next) {
   }
 }
 
-module.exports = { router, authenticate };
+/** Admin Route checking */
+function isAdmin(req, res, next) {
+  if (req.user.isAdmin) {
+    next();
+  } else {
+    next({ status: 401, message: "You must be an administrator." });
+  }
+}
+
+module.exports = { router, authenticate, isAdmin };

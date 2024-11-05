@@ -7,6 +7,12 @@ const seed = async (numUsers = 3, numBookings = 3, numReviews = 1) => {
     name: faker.internet.displayName(),
     password: faker.internet.password(),
   }));
+  users.push({
+    email: "kkk@gmail.com",
+    name: "kkk",
+    password: "kkk",
+    isAdmin: true,
+  });
   await prisma.user.createMany({ data: users });
 
   // Create rooms
