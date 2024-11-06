@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
-module.exports = router;
-const { authenticate } = require("./auth");
+require('dotenv').config();
+const { verifyToken } = require("./auth");
 const prisma = require("../prisma");
 
+
+
+router.use(verifyToken);
 // GET/rooms should send an array of all rooms.
 router.get("/", async (req, res, next) => {
   try {
@@ -18,11 +21,11 @@ router.get("/", async (req, res, next) => {
 router.get("/available", async (req, res, next) => {
   try {
     const { fromDate, toDate } = req.query;
-
+    
     // Transfer dates from strings to dates
     const start = new Date(fromDate);
     const end = new Date(toDate);
-
+    
     const availableRooms = await prisma.room.findMany({
       where: {
         // should match the field name in module
@@ -63,9 +66,9 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // POST/rooms should add a new room
-router.post("/", authenticate, async (req, res, next) => {
+router.post("/", verifyToken, async (req, res, next) => {
   const { roomName, description, price, image, type } = req.body;
-
+  
   try {
     const room = await prisma.room.create({
       data: { roomName, description, price, image, type },
@@ -79,7 +82,7 @@ router.post("/", authenticate, async (req, res, next) => {
 // DELETE/rooms should delete an existing room giver an ID
 router.delete("/:id", async (req, res, next) => {
   const { id } = req.params;
-
+  
   try {
     // Check if the room exists
     const room = await prisma.room.findUnique({ where: { id: +id } });
@@ -89,7 +92,7 @@ router.delete("/:id", async (req, res, next) => {
         message: `Room with id ${id} does not exist.`,
       });
     }
-
+    
     // Delete the room
     await prisma.room.delete({ where: { id: +id } });
     res.sendStatus(204);
@@ -102,7 +105,7 @@ router.delete("/:id", async (req, res, next) => {
 router.put("/:id", async (req, res, next) => {
   const { id } = req.params;
   const { roomName, description, price, image, type } = req.body;
-
+  
   try {
     // Check if the room exists
     const room = await prisma.room.findUnique({ where: { id: +id } });
@@ -112,7 +115,7 @@ router.put("/:id", async (req, res, next) => {
         message: `Room with id ${id} does not exist.`,
       });
     }
-
+    
     // Update the room
     const updatedRoom = await prisma.room.update({
       where: { id: +id },
@@ -123,3 +126,5 @@ router.put("/:id", async (req, res, next) => {
     next(e);
   }
 });
+
+module.exports = router;
