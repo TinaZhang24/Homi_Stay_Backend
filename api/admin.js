@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 module.exports = router;
-const { authenticate } = require("./auth");
+const { authenticate, isAdmin } = require("./auth");
 const prisma = require("../prisma");
 
 // GET/users should send an array of all users.
-router.get("/users", authenticate, async (req, res, next) => {
+router.get("/users", isAdmin, async (req, res, next) => {
   try {
     const users = await prisma.user.findMany();
     res.status(201).json({ message: "all users", users });
@@ -15,7 +15,7 @@ router.get("/users", authenticate, async (req, res, next) => {
 });
 
 // DELETE/users should delete an existing user giver an ID
-router.delete("/:id", authenticate, async (req, res, next) => {
+router.delete("/:id", isAdmin, async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -37,7 +37,7 @@ router.delete("/:id", authenticate, async (req, res, next) => {
 });
 
 // PUT/users should update the information of a specific user by ID
-router.put("/:id", authenticate, async (req, res, next) => {
+router.put("/:id", isAdmin, async (req, res, next) => {
   const { id } = req.params;
   const { name, email, password } = req.body;
 

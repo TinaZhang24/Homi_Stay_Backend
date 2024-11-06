@@ -11,9 +11,8 @@ dotenv.config();
 app.use(require("morgan")("dev"));
 app.use(express.json());
 
-
 app.use((req, res, next) => {
-  console.log(`${req.method} ${req.originalUrl}`);
+  console.log(`" METHOD : ${req.method} ${req.originalUrl}`);
   next();
 });
 //Routes for auth, bookings, rooms, admin

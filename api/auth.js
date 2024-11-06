@@ -15,10 +15,10 @@ router.use(async (req, res, next) => {
   const authHeader = req.headers.authorization;
   // Slice off the first 7 characters (Bearer ), leaving the token
   const token = authHeader?.split(" ")[1];
-  console.log(token); // "Bearer <token>"
+  console.log("TOKEN: ", token); // "Bearer <token>"
   // If there is no token move on to the next middleware
   if (!token) {
-    return res.status(401).send({ message: "no token" });
+    return next();
   }
 
   // Find user with ID decrypted from the token and attach to the request
@@ -26,12 +26,13 @@ router.use(async (req, res, next) => {
     // Decodes the id from the token, using the secret code in env
     // Assigns the id to variable id
     const { id } = jwt.verify(token, JWT_SECRET);
-    console.log(id);
+    console.log("ID :", id);
     const user = await prisma.user.findUniqueOrThrow({
       where: { id },
     });
     // Attach the found customer to the request object
     req.user = user;
+    console.log(req.user);
     // Move to the next middleware
     next();
   } catch (error) {
@@ -56,7 +57,8 @@ router.post("/login", async (req, res, next) => {
     const user = await prisma.user.login(email, password);
 
     const token = createToken(user.id);
-    res.json({ token });
+    console.log("BACKEND LOGIN:", user);
+    res.json({ token, admin: user.isAdmin });
   } catch (error) {
     next(error);
   }
@@ -64,6 +66,7 @@ router.post("/login", async (req, res, next) => {
 
 /** Checks the request for an authenticated user. */
 function authenticate(req, res, next) {
+  console.log("AUTH REQ: ", req);
   if (req.user) {
     next();
   } else {
