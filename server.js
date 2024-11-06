@@ -11,11 +11,11 @@ dotenv.config();
 app.use(require("morgan")("dev"));
 app.use(express.json());
 
-//Routes for auth, booking, rooms, users
+//Routes for auth, bookings, rooms, admin
 app.use(require("./api/auth").router);
 app.use("/bookings", require("./api/bookings"));
 app.use("/rooms", require("./api/rooms"));
-app.use("/users", require("./api/users"));
+app.use("/admin", require("./api/admin"));
 
 app.use(express.json());
 // Logging middleware

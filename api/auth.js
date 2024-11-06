@@ -16,13 +16,14 @@ router.use(async (req, res, next) => {
   // Slice off the first 7 characters (Bearer ), leaving the token
   const token = authHeader?.split(" ")[1]; // "Bearer <token>"
   // If there is no token move on to the next middleware
-  if (!token) return next();
+  if (!token) return res.status(401).send({ message: "no token" });
 
   // Find user with ID decrypted from the token and attach to the request
   try {
     // Decodes the id from the token, using the secret code in env
     // Assigns the id to variable id
     const { id } = jwt.verify(token, JWT_SECRET);
+    console.log(id);
     const user = await prisma.user.findUniqueOrThrow({
       where: { id },
     });

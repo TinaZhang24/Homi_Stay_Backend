@@ -5,10 +5,10 @@ const { isAdmin } = require("./auth");
 const prisma = require("../prisma");
 
 // GET/users should send an array of all users.
-router.get("/", isAdmin, async (req, res, next) => {
+router.get("/admin/users", isAdmin, async (req, res, next) => {
   try {
     const users = await prisma.user.findMany();
-    res.json(users);
+    res.status(201).json({ message: "all users", users });
   } catch (e) {
     next(e);
   }
@@ -29,7 +29,7 @@ router.delete("/:id", isAdmin, async (req, res, next) => {
     }
 
     // Delete the user
-    await prisma.user.delete({ where: { id: +id } });
+    await prisma.user.delete(user);
     res.sendStatus(204);
   } catch (e) {
     next(e);
