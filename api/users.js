@@ -5,10 +5,10 @@ const { authenticate } = require("./auth");
 const prisma = require("../prisma");
 
 // GET/users should send an array of all users.
-router.get("/users", authenticate, async (req, res, next) => {
+router.get("/", authenticate, async (req, res, next) => {
   try {
     const users = await prisma.user.findMany();
-    res.status(201).json({ message: "all users", users });
+    res.json(users);
   } catch (e) {
     next(e);
   }
@@ -29,7 +29,7 @@ router.delete("/:id", authenticate, async (req, res, next) => {
     }
 
     // Delete the user
-    await prisma.user.delete(user);
+    await prisma.user.delete({ where: { id: +id } });
     res.sendStatus(204);
   } catch (e) {
     next(e);

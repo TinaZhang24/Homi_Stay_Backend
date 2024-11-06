@@ -11,18 +11,19 @@ dotenv.config();
 app.use(require("morgan")("dev"));
 app.use(express.json());
 
+
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.originalUrl}`);
+  next();
+});
 //Routes for auth, bookings, rooms, admin
 app.use(require("./api/auth").router);
 app.use("/bookings", require("./api/bookings"));
 app.use("/rooms", require("./api/rooms"));
 app.use("/admin", require("./api/admin"));
-
-app.use(express.json());
+app.use("/users", require("./api/users"));
 // Logging middleware
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.originalUrl}`);
-  next();
-});
+
 // 404
 app.use((req, res, next) => {
   next({ status: 404, message: "Endpoint not found." });

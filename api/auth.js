@@ -14,9 +14,12 @@ router.use(async (req, res, next) => {
   // Grab token from headers only if it exists
   const authHeader = req.headers.authorization;
   // Slice off the first 7 characters (Bearer ), leaving the token
-  const token = authHeader?.split(" ")[1]; // "Bearer <token>"
+  const token = authHeader?.split(" ")[1];
+  console.log(token); // "Bearer <token>"
   // If there is no token move on to the next middleware
-  if (!token) return res.status(401).send({ message: "no token" });
+  if (!token) {
+    return res.status(401).send({ message: "no token" });
+  }
 
   // Find user with ID decrypted from the token and attach to the request
   try {
