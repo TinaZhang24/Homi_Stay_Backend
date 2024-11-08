@@ -9,8 +9,9 @@ const prisma = require("../prisma");
 // GET/users should send an array of all users.
 router.get("/users", isAdmin, async (req, res, next) => {
   try {
-    const users = await prisma.user?.findMany();
-    res.status(201).json({ users });
+    const users = await prisma.user.findMany();
+    // res.status(201).json({ users });
+    res.json(users);
   } catch (e) {
     next(e);
   }
@@ -44,7 +45,7 @@ router.delete("/users/:id", isAdmin, async (req, res, next) => {
 router.get("/bookings", isAdmin, async (req, res, next) => {
   try {
     const bookings = await prisma.booking.findMany();
-    res.status(201).json({ message: "all bookings", bookings });
+    res.json(bookings);
   } catch (e) {
     next(e);
   }
@@ -106,14 +107,14 @@ router.put("/bookings/:id", isAdmin, async (req, res, next) => {
 router.get("/rooms", isAdmin, async (req, res, next) => {
   try {
     const rooms = await prisma.room.findMany();
-    res.status(201).json({ message: "all rooms", rooms });
+    res.json(rooms);
   } catch (e) {
     next(e);
   }
 });
 
 // POST/rooms should add a room
-router.post("/rooms", authenticate, async (req, res, next) => {
+router.post("/rooms", isAdmin, async (req, res, next) => {
   const { roomName, description, price, image, type } = req.body;
   try {
     const room = await prisma.room.create({
