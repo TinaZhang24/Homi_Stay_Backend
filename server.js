@@ -20,7 +20,7 @@ app.use(require("./api/auth").router);
 app.use("/bookings", require("./api/bookings"));
 app.use("/rooms", require("./api/rooms"));
 app.use("/admin", require("./api/admin"));
-app.use("/users", require("./api/users"));
+
 // Logging middleware
 
 // 404
