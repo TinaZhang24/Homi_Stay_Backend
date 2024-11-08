@@ -9,7 +9,9 @@ const prisma = require("../prisma");
 // GET/users should send an array of all users.
 router.get("/users", isAdmin, async (req, res, next) => {
   try {
-    const users = await prisma.user.findMany();
+    const users = await prisma.user.findMany({
+      include: { booking: true },
+    });
     res.json(users);
   } catch (e) {
     next(e);
@@ -60,6 +62,21 @@ router.get("/bookings", isAdmin, async (req, res, next) => {
   try {
     const bookings = await prisma.booking.findMany();
     res.json(bookings);
+  } catch (e) {
+    next(e);
+  }
+});
+
+// GET/bookings/:id should send a single booking given an ID
+router.get("/bookings/:id", isAdmin, async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const booking = await prisma.booking.findUnique({ where: { id: +id } });
+    if (booking) {
+      res.json(booking);
+    } else {
+      next({ status: 404, message: `Booking with id ${id} does not exist.` });
+    }
   } catch (e) {
     next(e);
   }
@@ -120,8 +137,25 @@ router.put("/bookings/:id", isAdmin, async (req, res, next) => {
 // GET/rooms should send an array of all rooms.
 router.get("/rooms", isAdmin, async (req, res, next) => {
   try {
-    const rooms = await prisma.room.findMany();
+    const rooms = await prisma.room.findMany({
+      include: { booking: true },
+    });
     res.json(rooms);
+  } catch (e) {
+    next(e);
+  }
+});
+
+// GET/rooms/:id should send a single room given an ID
+router.get("/rooms/:id", isAdmin, async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const room = await prisma.room.findUnique({ where: { id: +id } });
+    if (room) {
+      res.json(room);
+    } else {
+      next({ status: 404, message: `Room with id ${id} does not exist.` });
+    }
   } catch (e) {
     next(e);
   }
