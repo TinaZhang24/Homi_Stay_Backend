@@ -19,6 +19,7 @@ app.use((req, res, next) => {
 app.use(require("./api/auth").router);
 app.use("/bookings", require("./api/bookings"));
 app.use("/rooms", require("./api/rooms"));
+app.use("/reviews", require("./api/reviews"));
 app.use("/admin", require("./api/admin"));
 
 // Logging middleware
