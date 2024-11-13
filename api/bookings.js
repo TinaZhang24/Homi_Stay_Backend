@@ -85,3 +85,24 @@ router.put("/:id", async (req, res, next) => {
     next(e);
   }
 });
+
+// POST/bookings/reviews should add a review given a booking ID
+router.post("/reviews", authenticate, async (req, res, next) => {
+  const { description, rating, image, roomId } = req.body;
+
+  try {
+    const review = await prisma.review.createMany({
+      data: {
+        description,
+        rating: +rating,
+        image,
+        roomId: roomId,
+      },
+    });
+    const result = review;
+
+    res.status(201).send({ message: "reviews", result });
+  } catch (e) {
+    next(e);
+  }
+});
