@@ -43,7 +43,7 @@ router.post("/register", async (req, res, next) => {
   try {
     const user = await prisma.user.register(name, email, password);
     const token = createToken(user.id);
-    res.status(201).json({ token });
+    res.status(201).json({ token, admin: user.isAdmin });
   } catch (error) {
     next(error);
   }
@@ -53,7 +53,6 @@ router.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const user = await prisma.user.login(email, password);
-
     const token = createToken(user.id);
     res.json({ token, admin: user.isAdmin });
   } catch (error) {
