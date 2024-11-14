@@ -1,19 +1,16 @@
 const prisma = require("../prisma");
 const { faker } = require("@faker-js/faker");
-const seed = async (numUsers = 3, numBookings = 3, numReviews = 1) => {
+const seed = async (numUsers = 1, numBookings = 3, numReviews = 1) => {
   // Create users
   const users = Array.from({ length: numUsers }, () => ({
     email: faker.internet.email(),
     name: faker.internet.displayName(),
     password: faker.internet.password(),
   }));
-  users.push({
-    email: "kkk@gmail.com",
-    name: "kkk",
-    password: "kkk",
-    isAdmin: true,
-  });
+
   await prisma.user.createMany({ data: users });
+
+  await prisma.user.register("nnn", "nnn@nnn.com", "nnn", true);
 
   // Create rooms
   const rooms = [
@@ -108,8 +105,8 @@ const seed = async (numUsers = 3, numBookings = 3, numReviews = 1) => {
   const bookings = Array.from({ length: numBookings }, () => ({
     fromDate: start,
     toDate: end,
-    userId: Math.floor(Math.random() * 3) + 1,
-    roomId: Math.floor(Math.random() * 10) + 1,
+    userId: 1,
+    roomId: 4,
   }));
   await prisma.booking.createMany({ data: bookings });
 
@@ -119,7 +116,7 @@ const seed = async (numUsers = 3, numBookings = 3, numReviews = 1) => {
     description: faker.lorem.sentence(4),
     rating: Math.floor(Math.random() * 5) + 1,
     image: faker.image.url(),
-    bookingId: 1,
+    roomId: 4,
   }));
   await prisma.review.createMany({ data: reviews });
 };

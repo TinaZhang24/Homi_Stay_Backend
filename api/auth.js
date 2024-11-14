@@ -26,13 +26,11 @@ router.use(async (req, res, next) => {
     // Decodes the id from the token, using the secret code in env
     // Assigns the id to variable id
     const { id } = jwt.verify(token, JWT_SECRET);
-    console.log("ID :", id);
     const user = await prisma.user.findUniqueOrThrow({
       where: { id },
     });
     // Attach the found customer to the request object
     req.user = user;
-    console.log(req.user);
     // Move to the next middleware
     next();
   } catch (error) {
@@ -45,7 +43,7 @@ router.post("/register", async (req, res, next) => {
   try {
     const user = await prisma.user.register(name, email, password);
     const token = createToken(user.id);
-    res.status(201).json({ token });
+    res.status(201).json({ token, admin: user.isAdmin });
   } catch (error) {
     next(error);
   }
@@ -55,9 +53,7 @@ router.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const user = await prisma.user.login(email, password);
-
     const token = createToken(user.id);
-    console.log("BACKEND LOGIN:", user);
     res.json({ token, admin: user.isAdmin });
   } catch (error) {
     next(error);
@@ -66,7 +62,6 @@ router.post("/login", async (req, res, next) => {
 
 /** Checks the request for an authenticated user. */
 function authenticate(req, res, next) {
-  console.log("AUTH REQ: ", req);
   if (req.user) {
     next();
   } else {

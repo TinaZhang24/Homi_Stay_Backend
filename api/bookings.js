@@ -4,7 +4,7 @@ module.exports = router;
 const { authenticate } = require("./auth");
 const prisma = require("../prisma");
 
-// GET/bookings should send an array of all bookings.
+// GET/bookings should send an array of all bookings of a single given user.
 router.get("/", authenticate, async (req, res, next) => {
   try {
     const bookings = await prisma.booking.findMany({
@@ -40,7 +40,6 @@ router.post("/", authenticate, async (req, res, next) => {
 });
 
 // DELETE/bookings should cancel a booking given a specific ID
-// To add authenticate param.
 router.delete("/:id", authenticate, async (req, res, next) => {
   const { id } = req.params;
   try {
@@ -82,6 +81,27 @@ router.put("/:id", async (req, res, next) => {
       },
     });
     res.json(updatedBooking);
+  } catch (e) {
+    next(e);
+  }
+});
+
+// POST/bookings/reviews should add a review given a booking ID
+router.post("/reviews", authenticate, async (req, res, next) => {
+  const { description, rating, image, roomId } = req.body;
+
+  try {
+    const review = await prisma.review.createMany({
+      data: {
+        description,
+        rating: +rating,
+        image,
+        roomId: roomId,
+      },
+    });
+    const result = review;
+
+    res.status(201).send({ message: "reviews", result });
   } catch (e) {
     next(e);
   }

@@ -30,6 +30,7 @@ model Room {
   image       String
   type        String
   booking     Booking[]
+  review      Review[]
 }
 
 model Booking {
@@ -37,20 +38,18 @@ model Booking {
   fromDate    DateTime
   toDate      DateTime
 
-  user        User @relation(fields: [userId], references: [id])
+  user        User @relation( fields: [userId], references: [id], onDelete:Cascade )
   userId      Int
 
-  room        Room @relation(fields: [roomId], references: [id])
+  room        Room @relation( fields: [roomId], references: [id], onDelete:Cascade )
   roomId      Int
-
-  review      Review? 
 }
 
 model Review {
-  id          Int    @id @default(autoincrement()) 
+  id          Int     @id @default(autoincrement()) 
   description String
   rating      Int
   image       String
-  booking     Booking @relation(fields: [bookingId], references: [id])
-  bookingId   Int     @unique
+  room        Room    @relation( fields:[roomId], references:[id], onDelete: Cascade )
+  roomId      Int     
 }

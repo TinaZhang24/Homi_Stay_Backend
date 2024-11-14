@@ -3,10 +3,10 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient().$extends({
   model: {
     user: {
-      async register(name, email, password, saltRounds = 10) {
+      async register(name, email, password, isAdmin, saltRounds = 10) {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const user = await prisma.user.create({
-          data: { name, email, password: hashedPassword },
+          data: { name, email, password: hashedPassword, isAdmin },
         });
         return user;
       },

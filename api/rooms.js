@@ -62,6 +62,20 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+// GET/rooms/:id/reviews should send an array of all reviews given a room.
+router.get("/:id/reviews", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const reviews = await prisma.room.findUniqueOrThrow({
+      where: { id: +id },
+      include: { review: true },
+    });
+    res.json(reviews);
+  } catch (e) {
+    next(e);
+  }
+});
+
 // POST/rooms should add a new room
 router.post("/", authenticate, async (req, res, next) => {
   const { roomName, description, price, image, type } = req.body;

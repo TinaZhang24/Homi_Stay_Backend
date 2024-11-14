@@ -21,8 +21,6 @@ app.use("/bookings", require("./api/bookings"));
 app.use("/rooms", require("./api/rooms"));
 app.use("/admin", require("./api/admin"));
 
-// Logging middleware
-
 // 404
 app.use((req, res, next) => {
   next({ status: 404, message: "Endpoint not found." });
