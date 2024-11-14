@@ -65,13 +65,11 @@ router.get("/:id", async (req, res, next) => {
 // GET/rooms/:id/reviews should send an array of all reviews given a room.
 router.get("/:id/reviews", async (req, res, next) => {
   const { id } = req.params;
-  console.log(id);
   try {
     const reviews = await prisma.room.findUniqueOrThrow({
       where: { id: +id },
       include: { review: true },
     });
-    console.log(reviews);
     res.json(reviews);
   } catch (e) {
     next(e);

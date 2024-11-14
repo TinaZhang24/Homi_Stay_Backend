@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 module.exports = router;
-const { authenticate, isAdmin } = require("./auth");
+const { isAdmin } = require("./auth");
 const prisma = require("../prisma");
 
 // Users:
