@@ -60,7 +60,7 @@ router.delete("/users/:id", isAdmin, async (req, res, next) => {
 // GET/bookings should send an array of all bookings.
 router.get("/bookings", isAdmin, async (req, res, next) => {
   try {
-    const bookings = await prisma.booking.findMany();
+    const bookings = await prisma.booking.findMany({ include: { user: true } });
     res.json(bookings);
   } catch (e) {
     next(e);
