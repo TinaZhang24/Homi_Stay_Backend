@@ -28,7 +28,7 @@ router.get("/available", async (req, res, next) => {
         // should match the field name in module
         booking: {
           none: {
-            OR: [
+            AND: [
               {
                 //should match the field name in module
                 fromDate: {
