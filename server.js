@@ -1,9 +1,9 @@
 const express = require("express");
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const cors = require("cors");
-app.use(cors({ origin: /localhost/ }));
+app.use(cors({ origin: ["https://homistay.netlify.app", /localhost/]}));
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -31,6 +31,6 @@ app.use((err, req, res, next) => {
   res.status(err.status ?? 500);
   res.json(err.message ?? "Sorry, something went wrong :(");
 });
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Listening on port ${PORT}...`);
 });
